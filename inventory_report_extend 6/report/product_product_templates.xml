@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <template id="report_productlabel_extend" inherit_id="product.report_productlabel">
+            <xpath expr='//t[@t-if="columns == 4 and rows == 12"]' position="after">
+                <t t-if="columns == 4 and rows == 8">
+                    <t t-set="padding_page" t-value="'padding: 8mm 4mm'" />
+                    <t t-set="report_to_call" t-value="'inventory_report_extend.report_simple_label4x8'" />
+                </t>
+            </xpath>
+        </template>
+
+        <template id="report_simple_label2x7_extend" inherit_id="product.report_simple_label2x7">
+            <xpath expr="//div[@class='text-right']" position="replace">
+                <div class="text-right" style="line-height:normal">
+                    <div class="o_label_extra_data">
+                        <t t-out="extra_html" />
+                    </div>
+                    <t t-if="price_included">
+                        <div class="o_label_left_column">
+                            <span class="text-nowrap" t-field="product.default_code" />
+                        </div>
+                        <div class="o_label_price_medium text-right">
+                            <t t-if="product.is_product_variant">
+                                <strong t-field="product.lst_price" t-options="{'widget': 'monetary', 'label_price': True}" />
+                            </t>
+                            <t t-else="">
+                                <strong t-field="product.list_price" t-options="{'widget': 'monetary', 'label_price': True}" />
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="o_label_left_column o_label_full_with">
+                            <span class="text-nowrap" t-field="product.default_code" />
+                        </div>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="report_simple_label4x8">
+            <t t-set="barcode_size" t-value="'width:45.5mm;height:7.5mm'" />
+            <t t-set="table_style" t-value="'width:48.3mm;height:33.37mm;' + table_style" />
+            <td t-att-style="make_invisible and 'visibility:hidden;'">
+                <div class="o_label_full o_label_small_text" t-att-style="table_style">
+                    <div class="o_label_name">
+                        <strong t-field="product.display_name" />
+                    </div>
+                    <t t-if="price_included">
+                        <div class="o_label_left_column">
+                            <span class="text-nowrap" t-field="product.default_code" />
+                        </div>
+                        <div class="o_label_price_medium text-right">
+                            <t t-if="product.is_product_variant">
+                                <strong t-field="product.lst_price" t-options="{'widget': 'monetary', 'label_price': True}" />
+                            </t>
+                            <t t-else="">
+                                <strong t-field="product.list_price" t-options="{'widget': 'monetary', 'label_price': True}" />
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="o_label_left_column o_label_full_with">
+                            <span class="text-nowrap" t-field="product.default_code" />
+                        </div>
+                    </t>
+                    <div class="text-center o_label_small_barcode">
+                        <t t-if="barcode">
+                            <div t-out="barcode" style="padding:0;" t-options="{'widget': 'barcode', 'symbology': 'auto', 'img_style': barcode_size}" />
+                            <!-- <img t-att-src="'/report/barcode/Code128/'+ barcode" style="width:250px;height:30px" alt="Barcode" /> -->
+                            <span class="text-center" t-out="barcode" />
+                        </t>
+                    </div>
+                </div>
+            </td>
+        </template>
+
+    </data>
+</odoo>
