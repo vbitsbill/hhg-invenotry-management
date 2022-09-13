@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_form_view_procurement_button_extend" model="ir.ui.view">
+
+            <field name="name">product.label.layout.form</field>
+            <field name="model">product.label.layout</field>
+            <field name="inherit_id" ref="product.product_label_layout_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="after">
+                    <script type="text/javascript" src="/inventory_report_extend/static/src/js/button.js"></script>
+
+                    <button name="action_print_label" type="object" string="Print" onclick='printMyLabel()' />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
